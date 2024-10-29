@@ -20,7 +20,9 @@ const temp = document.getElementById("temp"),
     fahrenheitBtn = document.querySelector(".fahrenheit"),
     hourlyBtn = document.querySelector(".hourly"),
     weekBtn = document.querySelector(".week"),
-    tempUnit = document.querySelectorAll(".temp-unit")
+    tempUnit = document.querySelectorAll(".temp-unit"),
+    searchForm = document.getElementById("search"),
+    search = document.getElementById("sea")
     
 
 
@@ -111,9 +113,9 @@ function getWeatherData(city, unit, hourlyOrWeek) {
             updateForecast(data.days, unit, "week");
         }
     })
-    // .catch((err) => {
-    //     // alert("city not found")
-    // })
+    .catch((err) => {
+        alert("city not found")
+    })
 }
 
 function celciusToFahrenheit(temp) {
@@ -313,3 +315,103 @@ function changeTimeSpan(unit){
     }
 }
 
+searchForm.addEventListener("submit",(e) => {
+    e.preventDefault();
+    let location = search.value;
+    if(location !== ""){
+        currentCity = location;
+        getWeatherData(currentCity, currentUnit, hourlyOrWeek);
+    }
+});
+
+cities = [
+    "Banglore",
+    "Mumbai",
+    "Delhi",
+    // "Hyderabad",
+    "Chennai"
+];
+
+var currentFocus;
+
+search.addEventListener("input",function(e){
+    removeSuggeestions();
+    var a,
+    b,
+    i,
+    val = this.value;
+
+    if( !val ){
+        return false;
+    }
+    currentFocus = -1;
+
+    a = document.createElement("ul");
+    a.setAttribute("id", "suggestions");
+
+    this.parentNode.appendChild(a);
+
+    for ( i = 0; i < cities.length; i++ ) {
+ 
+        if(cities[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            b = document.createElement("li");
+
+            b.innerHTML = "<strong>" + cities[i].substr(0,val.length) + "</strong>";
+
+            b.innerHTML += cities[i].substr(val.length);
+
+            b.innerHTML += "<input type='hidden' value='" + cities[i] + "'>";
+
+            b.addEventListener("click", function (e) {
+                search.value = this.getElementsByTagName("input")[0].value;
+                removeSuggeestions();
+            });
+
+            a.appendChild(b);
+        }
+    }
+});
+
+function removeSuggeestions(){
+    var x = document.getElementById("suggestions");
+
+    if(x) x.parentNode.removeChild(x);
+}
+
+search.addEventListener("keydown", function(e){
+    var x = document.getElementById("suggestions");
+
+    if(x) x = x.getElementsByTagName("li");
+
+    if(e.keyCode == 40){
+
+        currentFocus++;
+        addActive(x);
+    } else if(e.keyCode == 38){
+        currentFocus--;
+        addActive(x);
+    }
+    if(e.keyCode == 13){
+
+        e.preventDefault();
+        if(currentFocus > -1){
+
+            if(x) x[currentFocus].click();
+        }
+    }
+});
+
+function addActive(x){
+    if(!x) return false;
+    removeActive(x);ff
+    if(currentFocus >= x.length) currentFocus = 0;
+
+    if(currentFocus < 0) currentFocus = x.length - 1;
+    x[currentFocus].classList.add("active");
+}
+
+function removeActive(x){
+    for( var i=  0; i < x.length; i++){
+        x[i].classList.remove("active");
+    } 
+}
