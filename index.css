@@ -26,19 +26,19 @@ img{
 }
 .wrapper{
     display: flex;
-    width: 1400px;
+    width: 1450px;
     min-width: 900px;
     border-radius: 20px;
     overflow: hidden;
 }
 .sidebar{
-    width: 10%;
+    width: 25%;
     min-width: 250px;
     padding: 1%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: rgba(255,255,255,0.815);
+    background-color: #f6f6f6;
 }
 .search{
     display: flex;
@@ -148,15 +148,15 @@ img{
     align-items: center;
     font-size: 14px;
     gap: 10px;
-    margin-top: 330px;
+    margin-top: 125px;
 }
 .main{
     width: 100%;
-    min-width: 400px;
+    min-width: 800px;
     padding: 20px 40px;
     position: relative;
     padding-bottom: 90px;
-    background-color: #f6f6f6;
+    background-color: rgba(255,255,255,0.815);
 }
 .main nav{
     display: flex;
@@ -264,9 +264,9 @@ nav .units button{
   .credits {
     text-align: center;
     font-size: 12px;
-    color: #c2c2c2;
+    /* color: #c2c2c2; */
     position: absolute;
     bottom: 30px;
-    left: 50%;
+    left: 45%;
     transform: translateX(-50%);
   }
