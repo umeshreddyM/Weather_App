@@ -114,7 +114,7 @@ function getWeatherData(city, unit, hourlyOrWeek) {
         }
     })
     .catch((err) => {
-        alert("city not found")
+        alert("city not found in our database")
     })
 }
 
@@ -212,13 +212,23 @@ function getDayName(date) {
     ];
     return days[day.getDay()];
 }
-
 function getHour(time) {
-    let [hour, minute] = time.split(":");
-    let ampm = hour >= 12 ? "PM" : "AM";
-    hour = hour % 12 || 12;
-    return `${hour}:${minute} ${ampm}`;
+    let hour = time.split(":")[0];
+    let min = time.split(":")[1];
+    if (hour > 12) {
+        hour = hour - 12;
+        return` ${hour}:${min} PM`;
+    } else {
+        return `${hour}:${min} AM`;
+    }
 }
+
+// function getHour(time) {
+//     let [hour, minute] = time.split(":");
+//     let ampm = hour >= 12 ? "PM" : "AM";
+//     hour = hour % 12 || 12;
+//     return `${hour}:${minute} ${ampm}`;
+// }
 
 function updateForecast(data, unit, type) {
     weatherCards.innerHTML = "";
@@ -328,7 +338,7 @@ cities = [
     "Banglore",
     "Mumbai",
     "Delhi",
-    // "Hyderabad",
+    "Hyderabad",
     "Chennai"
 ];
 
